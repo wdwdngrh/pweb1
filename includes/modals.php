@@ -80,7 +80,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="create-topic-handler.php">
+                <form method="POST" action="create-topic-handler.php" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label class="form-label">Judul Topik</label>
                         <input type="text" name="title" class="form-control" placeholder="Tulis judul topik yang jelas dan deskriptif" required>
@@ -103,6 +103,12 @@
                         <textarea name="content" class="form-control" rows="6" placeholder="Jelaskan pertanyaan atau topik yang ingin didiskusikan..." required></textarea>
                     </div>
                     <div class="mb-3">
+                        <label class="form-label">Upload Gambar Soal (opsional)</label>
+                        <input type="file" name="image" class="form-control" accept="image/*">
+                        <small class="text-muted">Format: JPG, PNG, GIF. Maksimal 5MB</small>
+                        <div id="imagePreview" class="mt-2"></div>
+                    </div>
+                    <div class="mb-3">
                         <label class="form-label">Tag (opsional)</label>
                         <input type="text" name="tags" class="form-control" placeholder="Contoh: integral, limit, trigonometri">
                         <small class="text-muted">Pisahkan dengan koma</small>
@@ -116,4 +122,27 @@
         </div>
     </div>
 </div>
+
+<script>
+// Preview image when selected
+document.addEventListener('DOMContentLoaded', function() {
+    const imageInput = document.querySelector('input[name="image"]');
+    if (imageInput) {
+        imageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const preview = document.getElementById('imagePreview');
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" class="img-fluid rounded" style="max-height: 200px;">`;
+                }
+                reader.readAsDataURL(file);
+            } else {
+                preview.innerHTML = '';
+            }
+        });
+    }
+});
+</script>
 <?php endif; ?>

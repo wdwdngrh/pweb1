@@ -135,7 +135,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_comment'])) {
                                 <i class="bi bi-three-dots"></i>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="edit-topic.php?id=<?php echo $topic_id; ?>"><i class="bi bi-pencil"></i> Edit</a></li>
                                 <li><a class="dropdown-item text-danger" href="delete-topic.php?id=<?php echo $topic_id; ?>" onclick="return confirm('Yakin ingin menghapus topik ini?')"><i class="bi bi-trash"></i> Hapus</a></li>
                             </ul>
                         </div>
@@ -153,6 +152,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_comment'])) {
                 <div class="topic-content mb-4" style="white-space: pre-wrap;">
                     <?php echo nl2br(htmlspecialchars($topic['content'])); ?>
                 </div>
+
+                <!-- Display image if exists -->
+                <?php if (!empty($topic['image_path']) && file_exists('uploads/topics/' . $topic['image_path'])): ?>
+                    <div class="mb-4">
+                        <img src="uploads/topics/<?php echo htmlspecialchars($topic['image_path']); ?>" 
+                             class="img-fluid rounded" 
+                             style="max-width: 100%; max-height: 500px; object-fit: contain;"
+                             alt="Gambar topik">
+                    </div>
+                <?php endif; ?>
 
                 <div class="d-flex gap-3 border-top pt-3">
                     <?php if (isLoggedIn()): ?>
@@ -203,11 +212,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_comment'])) {
                                 </div>
                             </div>
                             <p class="mt-2 mb-2" style="white-space: pre-wrap;"><?php echo nl2br(htmlspecialchars($comment['content'])); ?></p>
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-sm btn-link text-decoration-none p-0">
-                                    <i class="bi bi-hand-thumbs-up"></i> <?php echo $comment['like_count']; ?>
-                                </button>
-                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,9 +1,26 @@
--- Database: utbk_forum
+-- ===============================
+-- DATABASE UTBK FORUM (FIXED)
+-- ===============================
 
 CREATE DATABASE IF NOT EXISTS utbk_forum;
 USE utbk_forum;
 
--- Tabel Users
+-- Drop tables if exist (untuk fresh install)
+DROP TABLE IF EXISTS event_participants;
+DROP TABLE IF EXISTS events;
+DROP TABLE IF EXISTS reports;
+DROP TABLE IF EXISTS notifications;
+DROP TABLE IF EXISTS likes;
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS topics;
+DROP TABLE IF EXISTS community_members;
+DROP TABLE IF EXISTS communities;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS users;
+
+-- ===============================
+-- TABEL USERS
+-- ===============================
 CREATE TABLE users (
     user_id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(50) UNIQUE NOT NULL,
@@ -21,27 +38,32 @@ CREATE TABLE users (
     INDEX idx_email (email)
 );
 
--- Tabel Categories
+-- ===============================
+-- TABEL CATEGORIES
+-- ===============================
 CREATE TABLE categories (
     category_id INT PRIMARY KEY AUTO_INCREMENT,
     category_name VARCHAR(100) NOT NULL,
     description TEXT,
-    icon VARCHAR(50),
-    color VARCHAR(20),
+    icon VARCHAR(50) DEFAULT 'bi-grid',
+    icon_image VARCHAR(255),
+    color VARCHAR(20) DEFAULT 'primary',
     topic_count INT DEFAULT 0,
-    member_count INT DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Tabel Communities
+-- ===============================
+-- TABEL COMMUNITIES
+-- ===============================
 CREATE TABLE communities (
     community_id INT PRIMARY KEY AUTO_INCREMENT,
     community_name VARCHAR(100) NOT NULL,
     slug VARCHAR(100) UNIQUE NOT NULL,
     description TEXT,
     full_description TEXT,
-    icon VARCHAR(50),
-    icon_bg VARCHAR(20),
+    icon VARCHAR(50) DEFAULT 'bi-people',
+    icon_image VARCHAR(255),
+    icon_bg VARCHAR(20) DEFAULT '#007bff',
     category_id INT,
     creator_id INT,
     member_count INT DEFAULT 0,
@@ -54,7 +76,9 @@ CREATE TABLE communities (
     INDEX idx_slug (slug)
 );
 
--- Tabel Community Members
+-- ===============================
+-- TABEL COMMUNITY MEMBERS
+-- ===============================
 CREATE TABLE community_members (
     member_id INT PRIMARY KEY AUTO_INCREMENT,
     community_id INT NOT NULL,
@@ -66,7 +90,9 @@ CREATE TABLE community_members (
     UNIQUE KEY unique_membership (community_id, user_id)
 );
 
--- Tabel Topics/Discussions
+-- ===============================
+-- TABEL TOPICS
+-- ===============================
 CREATE TABLE topics (
     topic_id INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(255) NOT NULL,
@@ -75,6 +101,7 @@ CREATE TABLE topics (
     category_id INT,
     community_id INT,
     tags VARCHAR(255),
+    image_path VARCHAR(255),
     view_count INT DEFAULT 0,
     comment_count INT DEFAULT 0,
     like_count INT DEFAULT 0,
@@ -92,7 +119,9 @@ CREATE TABLE topics (
     FULLTEXT KEY ft_search (title, content, tags)
 );
 
--- Tabel Comments
+-- ===============================
+-- TABEL COMMENTS
+-- ===============================
 CREATE TABLE comments (
     comment_id INT PRIMARY KEY AUTO_INCREMENT,
     topic_id INT NOT NULL,
@@ -109,7 +138,9 @@ CREATE TABLE comments (
     INDEX idx_topic (topic_id)
 );
 
--- Tabel Likes (untuk topics dan comments)
+-- ===============================
+-- TABEL LIKES
+-- ===============================
 CREATE TABLE likes (
     like_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
@@ -121,7 +152,9 @@ CREATE TABLE likes (
     INDEX idx_likeable (likeable_type, likeable_id)
 );
 
--- Tabel Events
+-- ===============================
+-- TABEL EVENTS
+-- ===============================
 CREATE TABLE events (
     event_id INT PRIMARY KEY AUTO_INCREMENT,
     community_id INT NOT NULL,
@@ -136,7 +169,9 @@ CREATE TABLE events (
     FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
--- Tabel Event Participants
+-- ===============================
+-- TABEL EVENT PARTICIPANTS
+-- ===============================
 CREATE TABLE event_participants (
     participant_id INT PRIMARY KEY AUTO_INCREMENT,
     event_id INT NOT NULL,
@@ -147,7 +182,9 @@ CREATE TABLE event_participants (
     UNIQUE KEY unique_participant (event_id, user_id)
 );
 
--- Tabel Notifications
+-- ===============================
+-- TABEL NOTIFICATIONS
+-- ===============================
 CREATE TABLE notifications (
     notification_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
@@ -161,7 +198,9 @@ CREATE TABLE notifications (
     INDEX idx_user_read (user_id, is_read)
 );
 
--- Tabel Reports (untuk moderasi)
+-- ===============================
+-- TABEL REPORTS
+-- ===============================
 CREATE TABLE reports (
     report_id INT PRIMARY KEY AUTO_INCREMENT,
     reporter_id INT NOT NULL,
@@ -176,15 +215,37 @@ CREATE TABLE reports (
     FOREIGN KEY (reviewed_by) REFERENCES users(user_id) ON DELETE SET NULL
 );
 
--- Insert data kategori default
-INSERT INTO categories (category_name, description, icon, color) VALUES
-('Tes Potensi Skolastik', 'Pemahaman bacaan, penalaran matematika, dan pengetahuan kuantitatif', 'bi-calculator', 'primary'),
-('Matematika', 'Aljabar, kalkulus, geometri, dan statistika', 'bi-graph-up', 'success'),
-('Bahasa Indonesia', 'Tata bahasa, pemahaman teks, dan penulisan', 'bi-book', 'warning'),
-('Bahasa Inggris', 'Grammar, reading comprehension, dan vocabulary', 'bi-globe', 'danger'),
-('Fisika', 'Mekanika, termodinamika, listrik, dan optik', 'bi-flask', 'info'),
-('Kimia', 'Kimia organik, anorganik, dan fisika', 'bi-atom', 'purple');
+-- ===============================
+-- DATA DEFAULT
+-- ===============================
 
--- Insert admin default (password: admin123)
+-- Admin (password: password)
 INSERT INTO users (username, email, password, full_name, role) VALUES
 ('admin', 'admin@utbkforum.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Administrator', 'admin');
+
+-- User demo (password: password)
+INSERT INTO users (username, email, password, full_name) VALUES
+('user1', 'user1@test.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'User Demo 1'),
+('user2', 'user2@test.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'User Demo 2');
+
+-- Categories
+INSERT INTO categories (category_name, description, icon, color) VALUES
+('Tes Potensi Skolastik', 'Pemahaman bacaan dan penalaran', 'bi-calculator', 'primary'),
+('Matematika', 'Aljabar, kalkulus, geometri', 'bi-graph-up', 'success'),
+('Bahasa Indonesia', 'Tata bahasa dan teks', 'bi-book', 'warning'),
+('Bahasa Inggris', 'Grammar dan vocabulary', 'bi-globe', 'danger'),
+('Fisika', 'Mekanika dan listrik', 'bi-flask', 'info'),
+('Kimia', 'Kimia organik dan anorganik', 'bi-atom', 'purple');
+
+-- Communities
+INSERT INTO communities (community_name, slug, description, full_description, icon, icon_bg, category_id, creator_id, member_count, discussion_count) VALUES
+('Matematika Master', 'matematika-master', 'Belajar matematika UTBK', 'Komunitas belajar matematika UTBK dengan berbagai pembahasan soal dan tips', 'bi-calculator-fill', '#28a745', 2, 1, 324, 156),
+('Fisika Fun', 'fisika-fun', 'Belajar fisika seru', 'Komunitas fisika UTBK yang menyenangkan', 'bi-lightning-fill', '#17a2b8', 5, 1, 198, 89);
+
+-- Sample Topics
+INSERT INTO topics (title, content, author_id, category_id, tags) VALUES
+('Cara cepat menghitung integral?', 'Saya kesulitan menghitung integral tentu dengan batas yang rumit. Ada tips atau trik khusus yang bisa dipake?', 2, 2, 'integral,kalkulus,matematika'),
+('Tips mengerjakan soal TPS', 'Bagaimana strategi terbaik untuk mengerjakan soal TPS agar waktu tidak habis?', 3, 1, 'tps,strategi,tips');
+
+-- Update counts
+UPDATE categories c SET topic_count = (SELECT COUNT(*) FROM topics t WHERE t.category_id = c.category_id);

@@ -14,7 +14,17 @@ if ($topic_id === 0) {
 }
 
 // Update view count
-$db->query("UPDATE topics SET view_count = view_count + 1 WHERE topic_id = $topic_id");
+if (!isset($_SESSION['viewed_topics'])) {
+    $_SESSION['viewed_topics'] = [];
+}
+
+if (!in_array($topic_id, $_SESSION['viewed_topics'])) {
+    $stmt = $db->prepare("UPDATE topics SET view_count = view_count + 1 WHERE topic_id = ?");
+    $stmt->bind_param("i", $topic_id);
+    $stmt->execute();
+
+    $_SESSION['viewed_topics'][] = $topic_id;
+}
 
 // Get topic details
 $stmt = $db->prepare("

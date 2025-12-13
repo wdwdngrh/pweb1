@@ -7,9 +7,9 @@ startSession();
 
 /* ================= GOOGLE OAUTH CONFIG ================= */
 $googleClient = new Google_Client();
-$googleClient->setClientId('19401584880-f8ft6l5nclbo1dd0ops799tf3hvq0nbt.apps.googleusercontent.com'); // sesuaikan yang dapat di google cloud console
-$googleClient->setClientSecret('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'); // sesuaikan yang di dapat di google cloud console
-$googleClient->setRedirectUri('http://localhost/pwebbaru-main/pwebbaru-main/callback.php'); // SESUAIKAN
+$googleClient->setClientId('CLIENT_ID_DIDAPAT'); // sesuaikan yang dapat DIDAPAY google cloud console
+$googleClient->setClientSecret('CLIENT_SECRET_DIDAPAT'); // sesuaikan yang DIDAPAT di google cloud console
+$googleClient->setRedirectUri('PATH_KE_FILE_CALLBACK.PHP_YANG_DIISI_DI_GOOGLE_CLOUD_CONSOLE'); // sesuaiian yang DIISIKAN di google cloud console
 $googleClient->addScope('email');
 $googleClient->addScope('profile');
 

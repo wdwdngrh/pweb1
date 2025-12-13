@@ -113,33 +113,33 @@ async function checkAuthStatus() {
 
 // Update UI for logged-in user
 function updateUIForLoggedInUser(user) {
-    const navbar = document.querySelector('.navbar-nav');
-    if (!navbar) return;
+    // const navbar = document.querySelector('.navbar-nav');
+    // if (!navbar) return;
     
-    // Remove login/register buttons
-    const loginBtn = navbar.querySelector('[data-bs-target="#loginModal"]');
-    const registerBtn = navbar.querySelector('[data-bs-target="#registerModal"]');
+    // // Remove login/register buttons
+    // const loginBtn = navbar.querySelector('[data-bs-target="#loginModal"]');
+    // const registerBtn = navbar.querySelector('[data-bs-target="#registerModal"]');
     
-    if (loginBtn) loginBtn.parentElement.remove();
-    if (registerBtn) registerBtn.parentElement.remove();
+    // if (loginBtn) loginBtn.parentElement.remove();
+    // if (registerBtn) registerBtn.parentElement.remove();
     
-    // Add user menu
-    const userMenu = document.createElement('li');
-    userMenu.className = 'nav-item dropdown';
-    userMenu.innerHTML = `
-        <a class="nav-link dropdown-toggle btn btn-light text-primary ms-2 px-3 rounded-pill" href="#" role="button" data-bs-toggle="dropdown">
-            <i class="bi bi-person-circle"></i> ${user.username}
-        </a>
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="profile.php"><i class="bi bi-person"></i> Profil</a></li>
-            ${user.role === 'admin' ? '<li><a class="dropdown-item" href="admin/dashboard.php"><i class="bi bi-speedometer2"></i> Dashboard Admin</a></li>' : ''}
-            <li><a class="dropdown-item" href="my-topics.php"><i class="bi bi-chat-dots"></i> Topik Saya</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#" data-action="logout"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
-        </ul>
-    `;
+    // // Add user menu
+    // const userMenu = document.createElement('li');
+    // userMenu.className = 'nav-item dropdown';
+    // userMenu.innerHTML = `
+    //     <a class="nav-link dropdown-toggle btn btn-light text-primary ms-2 px-3 rounded-pill" href="#" role="button" data-bs-toggle="dropdown">
+    //         <i class="bi bi-person-circle"></i> ${user.username}
+    //     </a>
+    //     <ul class="dropdown-menu">
+    //         <li><a class="dropdown-item" href="profile.php"><i class="bi bi-person"></i> Profil</a></li>
+    //         ${user.role === 'admin' ? '<li><a class="dropdown-item" href="admin/dashboard.php"><i class="bi bi-speedometer2"></i> Dashboard Admin</a></li>' : ''}
+    //         <li><a class="dropdown-item" href="my-topics.php"><i class="bi bi-chat-dots"></i> Topik Saya</a></li>
+    //         <li><hr class="dropdown-divider"></li>
+    //         <li><a class="dropdown-item" href="#" data-action="logout"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+    //     </ul>
+    // `;
     
-    navbar.appendChild(userMenu);
+    // navbar.appendChild(userMenu);
 }
 
 // Update UI for guest

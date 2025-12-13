@@ -1,5 +1,5 @@
 -- ===============================
--- DATABASE UTBK FORUM (FIXED)
+-- DATABASE UTBK FORUM
 -- ===============================
 
 CREATE DATABASE IF NOT EXISTS utbk_forum;
@@ -230,17 +230,19 @@ INSERT INTO users (username, email, password, full_name) VALUES
 
 -- Categories
 INSERT INTO categories (category_name, description, icon, color) VALUES
-('Tes Potensi Skolastik', 'Pemahaman bacaan dan penalaran', 'bi-calculator', 'primary'),
-('Matematika', 'Aljabar, kalkulus, geometri', 'bi-graph-up', 'success'),
-('Bahasa Indonesia', 'Tata bahasa dan teks', 'bi-book', 'warning'),
-('Bahasa Inggris', 'Grammar dan vocabulary', 'bi-globe', 'danger'),
-('Fisika', 'Mekanika dan listrik', 'bi-flask', 'info'),
-('Kimia', 'Kimia organik dan anorganik', 'bi-atom', 'purple');
+('Penalaran umum', 'Kemampuan bernalar yang logis', 'bi-book', 'success'),
+('Pengetahuan dan Pemahaman Umum', 'Pengetahuan keterampilan berbahasa dan memahami informasi', 'bi-book', 'success'),
+('Pemahaman Bacaan dan Menulis', 'Kemampuan menulis dan memahami bacaan', 'bi-book', 'success'),
+('Pengetahuan Kuantitatif', 'Pengetahuan perhitungan dan pemecahan masalah', 'bi-book', 'success'),
+('Literasi Bahasa Indonesia', 'Kemampuan memahami dan mengevaluasi teks bahasa Indonesia', 'bi-book', 'success'),
+('Literasi Bahasa Inggris', 'Kemampuan memahami dan mengevaluasi teks bahasa Inggris', 'bi-book', 'success'),
+('Penalaran Matematika', 'Kemampuan memahami literasi matematika', 'bi-book', 'success'),
+('Umum', 'Semua bisa gabung', 'bi-book', 'success');
 
 -- Communities
 INSERT INTO communities (community_name, slug, description, full_description, icon, icon_bg, category_id, creator_id, member_count, discussion_count) VALUES
-('Matematika Master', 'matematika-master', 'Belajar matematika UTBK', 'Komunitas belajar matematika UTBK dengan berbagai pembahasan soal dan tips', 'bi-calculator-fill', '#28a745', 2, 1, 324, 156),
-('Fisika Fun', 'fisika-fun', 'Belajar fisika seru', 'Komunitas fisika UTBK yang menyenangkan', 'bi-lightning-fill', '#17a2b8', 5, 1, 198, 89);
+('Komunitas Surya Andyartha Last Chunk', 'surya-andyartha', 'Bagi yang mengikuti channel YouTube Surya Andyartha', 'Komunitas belajar Penalaran Matematika yang terpusat pada channel Youtube Surya Andyartha Last Chunk', 'bi-book', '#28a745', 7, 1, 0, 0),
+('Belajar ala Kukang', 'sloth-life', 'Ayo kumpul yang belajarnya lemot kek kukang', 'Komunitas yang akan membantu kalian belajar semua subtes UTBK tanpa takut dijudge, kita semua di sini saling bantu', 'bi-book', '#28a745', 8, 1, 0, 0);
 
 -- Sample Topics
 INSERT INTO topics (title, content, author_id, category_id, tags) VALUES

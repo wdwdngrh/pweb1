@@ -263,9 +263,6 @@ $like_count = $db->query("SELECT COUNT(*) as count FROM likes WHERE user_id = $u
         </div>
     </div>
 
-    <!-- Footer -->
-    <?php include 'includes/footer.php'; ?>
-
     <!-- Modals -->
     <?php include 'includes/modals.php'; ?>
 

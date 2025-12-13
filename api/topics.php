@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Jakarta');
 // api/topics.php - Topics CRUD handler
 
 require_once '../config/database.php';

@@ -2,10 +2,11 @@
 date_default_timezone_set('Asia/Jakarta');
 // config/database.php - Database configuration
 
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'utbk_forum');
+define('DB_HOST', getenv('MYSQLHOST') ?: 'localhost');
+define('DB_USER', getenv('MYSQLUSER') ?: 'root');
+define('DB_PASS', getenv('MYSQLPASSWORD') ?: '');
+define('DB_NAME', getenv('MYSQLDATABASE') ?: 'utbk_forum');
+define('DB_PORT', getenv('MYSQLPORT') ?: 3306); 
 
 class Database {
     private static $instance = null;
@@ -13,7 +14,8 @@ class Database {
     
     private function __construct() {
         try {
-            $this->conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+            // PENTING: Menggunakan 5 parameter: host, user, pass, dbname, port
+            $this->conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
             
             if ($this->conn->connect_error) {
                 throw new Exception("Connection failed: " . $this->conn->connect_error);

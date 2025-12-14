@@ -14,13 +14,14 @@ class Database {
     
     private function __construct() {
         try {
-            // PENTING: Menggunakan 5 parameter: host, user, pass, dbname, port
+            echo "Connecting to: " . DB_HOST . ":" . DB_PORT . "\n";
             $this->conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
             
             if ($this->conn->connect_error) {
                 throw new Exception("Connection failed: " . $this->conn->connect_error);
             }
             
+            echo "Connection successful!\n";
             $this->conn->set_charset("utf8mb4");
         } catch (Exception $e) {
             die("Database connection error: " . $e->getMessage());
